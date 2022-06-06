@@ -40,7 +40,7 @@ function byHoursController(req,res){
 function recentController(req,res){
 
 	var db = (new dao()).getConnection();
-	var sql = "SELECT * FROM stock_market.stock WHERE code =? and (SELECT MAX(timestamp) FROM stock_market.stock)"
+	var sql = "SELECT * FROM stock_market.stock WHERE code =? and (SELECT MAX(timestamp) FROM stock_market.stock) ORDER BY timestamp DESC LIMIT 1;"
 	var values = [req.params["code"]]
 
 	console.log(values)
@@ -57,9 +57,7 @@ function recentController(req,res){
 			}
 
 			console.log(result);
-			return res.status(200).json({
-				"message" : "hello world"
-			});
+			return res.status(200).json(result);
 		});
 	});
 
